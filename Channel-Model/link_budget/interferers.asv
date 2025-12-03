@@ -1,0 +1,80 @@
+%[text] # Modelling Interfering signals
+%[text:tableOfContents]{"heading":"**Table of Contents**"}
+%[text] ## System Setup
+%[text] We'll consider the entire amateur allocation from 430 MHz to 440MHz, so a 10MHz Bandwidth, and a 1 second period.
+fs = 20e6;  % Hz
+T = 1;      % Seconds
+%[text] ## Fylingdales RADAR
+%[text] We have the following rough details for the Fylingdales RADAR from \[1\]:
+%[text:table]
+%[text] | **Parameter** | **Value(s)** |
+%[text] | --- | --- |
+%[text] | Peak Output Power | 1-5MW |
+%[text] | Pulse Duration (ms) | 0\.25, 0.5, 1, 2, 4, 8, 16 |
+%[text] | Pulse frequency modulation | Search: 100–350 kHz chirp. Track: 1 or 5 MHz linear chirp |
+%[text] | Pulse repetition frequency (Hz) | up to 41 |
+%[text:table]
+%[text] According to \[Fig.9, 1\], the RADAR is in tracking mode when above around 15 degrees, which seems to have continuous pulses over time. The search mode seems to be active abouve 5 degrees, but with quite a low PRI, only getting one pulse in 5 minutes.
+%[text] 
+%%
+P_pk    = 10^6 * 1 % MW %[control:slider:20ac]{"position":[18,19]} %[output:4399e5f5]
+T_Pulse = 10^-3*2^-2 % ms %[control:slider:9bdb]{"position":[19,21]} %[output:4d275ec1]
+Chirp_B = 10^6 *   1 % MHz %[control:slider:70eb]{"position":[20,21]} %[output:7e3dec2c]
+F_cent  = 10^6 * 5 % MHz %[control:slider:26ae]{"position":[18,19]} %[output:6b085d6b]
+PRF     =          41% Hz %[control:slider:8ccd]{"position":[20,22]} %[output:45a29bee]
+PRI = 1/PRF %[output:05414f65]
+
+t = 0:1/fs:PRI;
+f0 = F_cent - Chirp_B/2;
+t1 = T_Pulse;
+f1 = F_cent + Chirp_B/2;
+radar_sig = chirp(t,f0,t1,f1,"linear") %[output:17dd3c80]
+
+plot
+%[text] 
+%[text] 
+%[text] ## References
+%[text] \[1\] G. Quintana-Diaz, D. Nodar-López, A. González Muíño, F. Aguado Agelet, C. Cappelletti, and T. Ekman, 'Detection of radio interference in the UHF amateur radio band with the Serpens satellite', Advances in Space Research, vol. 69, no. 2, pp. 1159–1169, Jan. 2022, doi: 10.1016/j.asr.2021.10.017.  
+%[text]  
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---
+%[control:slider:20ac]
+%   data: {"defaultValue":1,"label":"Peak Output Power","max":5,"min":0.5,"run":"Section","runOn":"ValueChanging","step":0.5}
+%---
+%[control:slider:9bdb]
+%   data: {"defaultValue":0,"label":"Pulse Duration","max":4,"min":-2,"run":"Section","runOn":"ValueChanging","step":1}
+%---
+%[control:slider:70eb]
+%   data: {"defaultValue":1,"label":"Chirp Bandwidth","max":5,"min":1,"run":"Section","runOn":"ValueChanging","step":4}
+%---
+%[control:slider:26ae]
+%   data: {"defaultValue":5,"label":"Chirp Center Frequency ","max":9.5,"min":0.5,"run":"Section","runOn":"ValueChanging","step":0.5}
+%---
+%[control:slider:8ccd]
+%   data: {"defaultValue":41,"label":"PRI","max":41,"min":1,"run":"Section","runOn":"ValueChanging","step":1}
+%---
+%[output:4399e5f5]
+%   data: {"dataType":"textualVariable","outputData":{"name":"P_pk","value":"1000000"}}
+%---
+%[output:4d275ec1]
+%   data: {"dataType":"textualVariable","outputData":{"name":"T_Pulse","value":"2.5000e-04"}}
+%---
+%[output:7e3dec2c]
+%   data: {"dataType":"textualVariable","outputData":{"name":"Chirp_B","value":"1000000"}}
+%---
+%[output:6b085d6b]
+%   data: {"dataType":"textualVariable","outputData":{"name":"F_cent","value":"5000000"}}
+%---
+%[output:45a29bee]
+%   data: {"dataType":"textualVariable","outputData":{"name":"PRF","value":"41"}}
+%---
+%[output:05414f65]
+%   data: {"dataType":"textualVariable","outputData":{"name":"PRI","value":"0.0244"}}
+%---
+%[output:17dd3c80]
+%   data: {"dataType":"matrix","outputData":{"columns":487805,"name":"radar_sig","rows":1,"type":"double","value":[["1.0000","0.1564","-0.9511","-0.4537","0.8093","0.7066","-0.5887","-0.8903","0.3109","0.9873","-0.0031","-0.9883","-0.3047","0.8934","0.5828","-0.7121","-0.8043","0.4621","0.9479","-0.1676","-0.9999","-0.1427","0.9556","0.4391","-0.8195","-0.6931","0.6048","0.8804","-0.3323","-0.9832"]]}}
+%---
