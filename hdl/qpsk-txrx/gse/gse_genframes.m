@@ -1,0 +1,23 @@
+function [gse_frames, lframe] = gse_genframes(message, hmac)
+%GSE_GENFRAMES Generation of GSE input frames using 
+arguments (Input)
+    msg     (1,:)   uint8 % UTF-8 or otherwise 8 bit encoded message
+    hmac    (1,1)   string
+end
+
+arguments (Output)
+    enc_msg (1,:) uint8  % GSE Encapsulated Messaged
+    status  (1,1) string % Error / Success 
+end
+
+fid  = fopen('gse/gse_input_frame.bin','r');
+
+bytes = uint8(fread(fid));
+
+lframe = length(bytes);
+
+gse_frames = repmat(bytes,nframes);
+gse_frames = gse_frames(:);
+
+
+end
