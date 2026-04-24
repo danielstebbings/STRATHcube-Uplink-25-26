@@ -1,23 +1,20 @@
-function [gse_frames, lframe] = gse_genframes(message, hmac)
+function [gse_frames, lframe] = gse_genframes(msg, hmac, nframes)
 %GSE_GENFRAMES Generation of GSE input frames using 
 arguments (Input)
     msg     (1,:)   uint8 % UTF-8 or otherwise 8 bit encoded message
-    hmac    (1,1)   string
+    hmac    (1,1)   string = "SkubeTradeshowDemoKey"
+    nframes (1,1)   = 1
 end
 
 arguments (Output)
-    enc_msg (1,:) uint8  % GSE Encapsulated Messaged
-    status  (1,1) string % Error / Success 
+    gse_frames (:,:) uint8  % nframe*lframe  GSE Encapsulated Messages
+    lframe     (1,1)    % Error / Success 
 end
 
-fid  = fopen('gse/gse_input_frame.bin','r');
 
-bytes = uint8(fread(fid));
+lframe = 41+length(msg);
+gse_frames = zeros(nframes,lframe);
 
-lframe = length(bytes);
-
-gse_frames = repmat(bytes,nframes);
-gse_frames = gse_frames(:);
-
-
+for n = 1:nframes
+    gse_frames(n,:) = gse_encode(msg,hmac,n-1);  
 end

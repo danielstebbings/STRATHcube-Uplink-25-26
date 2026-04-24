@@ -3,8 +3,8 @@ function [enc_msg,status] = gse_encode(msg, hmac, counter)
 %   Some of the worst code ever written
 arguments (Input)
     msg     (1,:)   uint8 % UTF-8 or otherwise 8 bit encoded message
-    hmac    (1,1)   string
-    counter (1,1)   uint16
+    hmac    (1,1)   string = "SkubeTradeshowDemoKey"
+    counter (1,1)   uint16 = 0
 end
 
 arguments (Output)

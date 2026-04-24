@@ -1,9 +1,8 @@
-function [gse_frames, lframe] = gse_genframes(message)
-%GSE_GENFRAMES Generation of GSE input frames from binary file
+function [gse_frames, lframe] = gse_genframes(msg, hmac, nframes)
+%GSE_GENFRAMES Generation of GSE input frames using 
 arguments (Input)
     msg     (1,:)   uint8 % UTF-8 or otherwise 8 bit encoded message
     hmac    (1,1)   string
-    counter (1,1)   uint16
 end
 
 arguments (Output)

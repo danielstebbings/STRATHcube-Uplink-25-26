@@ -1,9 +1,10 @@
-function [dec_msg, status] = gse_decode(enc_msg, verbose)
+function [dec_msg, status] = gse_decode(enc_msg, hmac, verbose)
 %gse_decode use kyle's gse decoder function to decode message
 %   Detailed explanation goes here
 
 arguments (Input)
     enc_msg (1,:) uint8
+    hmac    (1,1) string = "SkubeTradeshowDemoKey"
     verbose (1,1) logical = false
 end
 
@@ -22,7 +23,8 @@ fwrite(fid,enc_msg,'uint8');
 fclose(fid);
 
 % Call decap function and print results
-[cmd_status, cmd_out] = system("./gse/GSEDeencapForSkube");
+cmd_str = sprintf("./gse/GSEDeencapForSkube '%s'",hmac);
+[cmd_status, cmd_out] = system(cmd_str);
 
 if cmd_status ~= 0
     % Error occured 

@@ -1,0 +1,34 @@
+{
+  "config": {
+    "items": [
+      {
+        "infra": {
+          "name": "zed",
+          "display": "Zedboard",
+          "revision": "1.0",
+          "description": "ZedBoard Zynq Evaluation and Development Kit",
+          "company": "em.avnet.com",
+          "company_display": "Avnet",
+          "author": "ArtVVB",
+          "contributors": [
+            {
+              "group": "Avnet",
+              "url": "digilent.com"
+            }
+          ],
+          "category": "Single Part",
+          "website": "https://reference.em.avnet.com/reference/programmable-logic/zedboard/start",
+          "logo": "zed_board.jpg",
+          "search-keywords": [
+            "zed",
+            "em.avnet.com",
+            "board",
+            "Single Part"
+          ]
+        }
+      }
+    ]
+  },
+  "_major": 1,
+  "_minor": 0
+}

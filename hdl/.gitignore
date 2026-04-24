@@ -1,0 +1,6 @@
+./hdl_setup.m
+./setup.sh
+
+**/slprj/*
+**/.Xil/
+**/s2xLDPCParityMatrices*
